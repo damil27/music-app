@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/Header";
+import AddSong from "./components/AddSong";
+import SongList from "./components/SongList";
+import SongPlayer from "./components/SongPlayer";
+import { Grid, Hidden, useMediaQuery } from "@mui/material";
 
 function App() {
+  const greaterThanSM = useMediaQuery((theme) => theme.breakpoints.up("sm"));
+  const greaterThanMd = useMediaQuery((theme) => theme.breakpoints.up("md"));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <Hidden only="xs">
+        <Header />
+      </Hidden>
+      <Grid container spacing={2}>
+        <Grid style={{ padding: greaterThanSM ? 80 : 10 }} item sm={12} md={7}>
+          <AddSong />
+          <SongList />
+        </Grid>
+        <Grid
+          style={
+            greaterThanMd
+              ? { top: "70px", position: "fixed", right: 0, width: "100%" }
+              : {
+                  position: "fixed",
+                  width: "100%",
+                  left: 0,
+                  bottom: 0,
+                }
+          }
+          item
+          sm={12}
+          md={5}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <SongPlayer />
+        </Grid>
+      </Grid>
+    </>
   );
 }
 
